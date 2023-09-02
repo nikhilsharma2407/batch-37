@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <title>html</title>
 
+    <script src="./script.js"></script>
     <style>
         /* .bg-red {
             background-color: green;
@@ -115,7 +116,7 @@
     <h1>forms</h1>
     <form action="">
         <label for="empName">Name</label>
-        <input type="text" placeholder="enter name" id="empName">
+        <input type="text" placeholder="enter name" id="empName" onclick="(e)=>{alert('hello ',e.target.value)}">
 
         <label for="exp">Experience</label>
         <input type="number" min="0" max="10" id="exp" step="0.1">
