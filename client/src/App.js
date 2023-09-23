@@ -11,6 +11,7 @@ import { BrowserRouter, Link } from 'react-router-dom';
 import MyNavbar from './MyNavbar';
 import Login from './Login';
 import Signup from './Signup';
+import Products from './Products';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <BrowserRouter>
       <MyNavbar />
         <Routes>
+          <Route path='' element={<Products />} />
           <Route path='flex' element={<Flexbox />} />
           <Route path='bootstrap' element={<BootstrapDemo />} />
           <Route path='login' element={<Login />}/>

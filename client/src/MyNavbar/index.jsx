@@ -4,8 +4,11 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-
+import { useSearchParams } from 'react-router-dom'
 function MyNavbar() {
+    const [, setSearchParams] = useSearchParams();
+
+
     return (
         <Navbar expand="md" variant='dark' bg='dark'>
             <Container fluid>
@@ -38,6 +41,7 @@ function MyNavbar() {
                             placeholder="Search"
                             className="me-2"
                             aria-label="Search"
+                            onChange={e => setSearchParams({ 'search': e.target.value })}
                         />
                         <Button variant="outline-success">Search</Button>
                     </Form>

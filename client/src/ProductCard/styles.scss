@@ -1,0 +1,17 @@
+.product {
+    cursor: pointer;
+    .content {
+        height: 150px;
+    }
+
+    .description {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .image {
+        // height: 150px;
+        aspect-ratio: (4/3);
+    }
+}
