@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
 
+const dbConnection = require('./dbConnection');
 const router = require('./routes/router');
+
+const userRouter = require('./routes/userRouter');
 const requestLogger = require('./utils/requestLogger');
 const errHandler = require('./utils/errorHandler');
 const PORT = 4000;
@@ -14,7 +17,8 @@ app.use(express.json());
 app.use(requestLogger)
 
 http://localhost:4000/router
-app.use('/router',router)
+app.use('/router',router);
+app.use('/user',userRouter);
 
 // app.get('/users',(req,res)=>{
 //     res.send('requesting users')
