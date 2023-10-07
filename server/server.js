@@ -1,5 +1,8 @@
 const express = require('express');
+const dotenv = require("dotenv");
+dotenv.config();
 const app = express();
+const cookieParser = require('cookie-parser');
 
 const dbConnection = require('./dbConnection');
 const router = require('./routes/router');
@@ -12,6 +15,7 @@ const PORT = 4000;
 
 // used to read data passed to request body 
 app.use(express.json());
+app.use(cookieParser());
 
 // custom middleware used for logging
 app.use(requestLogger)
