@@ -29,7 +29,7 @@ const login = async (req, res, next) => {
         // password validation
         const isVerified = await verifyPassword(password, passwordHash);
         if (isVerified) {
-            const token = generateToken(userData,'10s');
+            const token = generateToken(userData);
             res.status(200);
             res.cookie('token', token, { maxAge: 3600_000, httpOnly: true })
             res.send({
@@ -48,8 +48,9 @@ const login = async (req, res, next) => {
 const loginWithCookie = async (req, res, next) => {
     try {
         const { token = null } = req.cookies;
-        const data = verifyToken(token);
-        res.send(responseCreator("Logged in with Cookie", 200, data));
+        const { username } = verifyToken(token);
+        const { password, ...user } = await UserModel.findUser(username);
+        res.send(responseCreator("Logged in with Cookie", 200, user));
     } catch (error) {
         next(error)
     }
@@ -58,7 +59,6 @@ const loginWithCookie = async (req, res, next) => {
 const order = async (req, res, next) => {
     const user = res.locals.user;
     res.send(responseCreator("order successful!!!", 201, user));
-
 }
 
 module.exports = { signup, login, loginWithToken: loginWithCookie, order }

@@ -1,5 +1,5 @@
 const errHandler = (err, req, res, next) => {
-    console.log(err.message);
+    console.log(err);
     if(err.code === 11000){
         err.message = 'username already exists!!!'
         err.status = 403;

@@ -8,6 +8,7 @@ const dbConnection = require('./dbConnection');
 const router = require('./routes/router');
 
 const userRouter = require('./routes/userRouter');
+const cartRouter = require('./routes/cartRouter');
 const requestLogger = require('./utils/requestLogger');
 const errHandler = require('./utils/errorHandler');
 const PORT = 4000;
@@ -23,6 +24,7 @@ app.use(requestLogger)
 http://localhost:4000/router
 app.use('/router',router);
 app.use('/user',userRouter);
+app.use('/cart',cartRouter);
 
 // app.get('/users',(req,res)=>{
 //     res.send('requesting users')
