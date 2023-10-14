@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const dbConnection = require('./dbConnection');
@@ -14,6 +15,10 @@ const errHandler = require('./utils/errorHandler');
 const PORT = 4000;
 // http://localhost:4000/router
 
+app.use(cors({
+    origin:'http://localhost:3000',
+    credentials:true
+}))
 // used to read data passed to request body 
 app.use(express.json());
 app.use(cookieParser());

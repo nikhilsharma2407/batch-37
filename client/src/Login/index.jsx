@@ -1,8 +1,75 @@
-import React from 'react'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { Card, Container, Row, Col } from 'react-bootstrap'
+import './styles.scss'
+import { useState } from 'react';
+import { loginApi } from '../apiUtil';
 
 function Login() {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const ENTER_KEY_CODE = 13;
+
+  const updateState = (e, fn) => {
+    fn(e.target.value);
+  }
+
+  const isFormValid = username && password;
+
+  const onLogin = async () => {
+    try {
+      if (!isFormValid) return;
+      const payload = {username, password};
+      const data = (await loginApi(payload)).data
+      console.log('loginData',data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const onKeyUp = (e)=>{
+    // console.log(e);
+    if(e.keyCode === ENTER_KEY_CODE){
+      console.log('Enter key pressed');
+      onLogin()
+      // trigger submit
+    }
+  }
+
   return (
-    <div>Login</div>
+    <Container fluid>
+      <Row>
+        <Col lg={{ span: 4, offset: 4 }} md={{ span: 6, offset: 3 }} sm={{ span: 10, offset: 1 }}>
+          <Card className='mt-5 signup'>
+            <Card.Body>
+              <Form>
+                <Form.Group className="mb-3" controlId="username">
+                  <Form.Label>username</Form.Label>
+                  <Form.Control placeholder="Enter username" onChange={e => updateState(e, setUsername)} />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password"
+                    onKeyUp={onKeyUp}
+                    onChange={e => updateState(e, setPassword)} />
+                </Form.Group>
+
+
+                <Button
+                  variant="outline-primary"
+                  onClick={onLogin}
+                  disabled={!isFormValid} >
+                  Login
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 

@@ -1,7 +1,8 @@
 const UserModel = require('../models/userModel');
 const { generateToken, verifyToken } = require('../utils/jwtUtils');
 const { generatePasswordHash, verifyPassword } = require('../utils/passwordUtils');
-const { errorCreator, responseCreator } = require('../utils/responseCreator')
+const { errorCreator, responseCreator } = require('../utils/responseCreator');
+const { generateCode, verifyOTP } = require('../utils/totpUtil');
 
 const signup = async (req, res, next) => {
     try {
@@ -10,10 +11,19 @@ const signup = async (req, res, next) => {
         const passwordHash = await generatePasswordHash(password);
 
         data.password = passwordHash;
+        const { secret, qrcode } = await generateCode();
+        data.secret = secret;
         const userData = await UserModel.createUser(data);
         console.log(userData);
         res.status(201);
-        res.send({ success: true, message: 'Account created successfully!!!' })
+        res.send({ success: true, message: 'Account created successfully!!!', data: qrcode });
+        // res.send(
+        //     `
+        //         <h1>Two Factor Authentication setup</h1>
+        //         <h2>Please scan the QRcode with Google Authenticator</h2>
+        //         <img src=${qrcode} />
+        //     `
+        // )
     } catch (error) {
         next(error)
     }
@@ -22,7 +32,7 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        const { password: passwordHash, ...userData } = await UserModel.findUser(username);
+        const { password: passwordHash, secret , ...userData } = await UserModel.findUser(username);
         console.log(password);
         console.log(userData);
 
@@ -61,4 +71,26 @@ const order = async (req, res, next) => {
     res.send(responseCreator("order successful!!!", 201, user));
 }
 
-module.exports = { signup, login, loginWithToken: loginWithCookie, order }
+const resetPassword = async (req, res, next) => {
+    try {
+        const { password, username, otp } = req.body;
+        const { secret } = await UserModel.findUser(username);
+        console.log({secret});
+        const isOTPvalid = verifyOTP(secret, otp);
+        if (isOTPvalid) {
+            // upadte the new password
+            const passwordHash = await generatePasswordHash(password);
+            const userUpadteData = await UserModel.updatePassword(username, passwordHash);
+            if (userUpadteData.modifiedCount) {
+                res.status(200);
+                res.send(responseCreator(`Password reset successfully!!!`))
+            }
+        } else{
+            errorCreator('Invalid OTP',401);
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = { signup, login, loginWithToken: loginWithCookie, order, resetPassword }

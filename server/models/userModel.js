@@ -14,6 +14,9 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'password is mandatory!!!']
     },
+    secret: {
+        type: String,
+    },
     cart: {
         type: [Object],
     },
@@ -98,16 +101,22 @@ userSchema.statics.increment = async (username, product, increment = true) => {
             "cart.$.quantity": factor
         }
     }, { new: true });
-    console.log('post increment',data, !increment, data.quantity);
+    console.log('post increment', data, !increment, data.quantity);
     if (!increment) {
-        const removeZeroQty = await UserModel.findOneAndUpdate({ username, 'cart.quantity':0}, {
+        const removeZeroQty = await UserModel.findOneAndUpdate({ username, 'cart.quantity': 0 }, {
             $pull: { cart: { quantity: 0 } }
         }, { new: true });
-            if(removeZeroQty){
-                return removeZeroQty
-            }
+        if (removeZeroQty) {
+            return removeZeroQty
+        }
     }
     return data
+}
+
+userSchema.statics.updatePassword = async (username, password) => {
+    return UserModel.updateOne({ username }, {
+        $set: { password }
+    });
 }
 
 const UserModel = model('users', userSchema);

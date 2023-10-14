@@ -73,4 +73,8 @@ function Signup() {
   )
 }
 
+        // <h1>Two Factor Authentication setup</h1>
+        // <h2>Please scan the QRcode with Google Authenticator</h2>
+        // <img src="" alt="" />
+
 export default Signup
