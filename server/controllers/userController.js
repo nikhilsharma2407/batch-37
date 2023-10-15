@@ -42,10 +42,7 @@ const login = async (req, res, next) => {
             const token = generateToken(userData);
             res.status(200);
             res.cookie('token', token, { maxAge: 3600_000, httpOnly: true })
-            res.send({
-                message: `${username} logged in successfully!!!`,
-                data: userData
-            })
+            res.send(responseCreator(`${username} logged in successfully!!!`,userData))
         } else {
             errorCreator('Invalid Password', 401);
         }

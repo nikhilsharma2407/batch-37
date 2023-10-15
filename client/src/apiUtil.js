@@ -6,6 +6,7 @@ const ENDPOINTS = {
     LOGIN: 'user/login',
     SIGNUP: 'user/signup',
     RESET_PASSWORD: 'user/resetPassword',
+    ADD_TO_CART:'cart/addToCart',
 }
 
 export const loginApi = (payload) => {
@@ -23,3 +24,7 @@ export const signupApi = (payload) => {
 export const resetPasswordApi = (payload) => {
     return instance.patch(ENDPOINTS.RESET_PASSWORD, payload);
 }
+
+export const addToCartApi = (payload)=>{
+    return instance.post(ENDPOINTS.ADD_TO_CART, payload);
+} 

@@ -4,8 +4,13 @@ import { Card, Container, Row, Col } from 'react-bootstrap'
 import './styles.scss'
 import { useState } from 'react';
 import { loginApi } from '../apiUtil';
+import { useDispatch } from 'react-redux';
+import { loginActionCreator } from '../reducers/userReducer';
 
 function Login() {
+
+  const dispatch = useDispatch();
+
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -22,8 +27,9 @@ function Login() {
     try {
       if (!isFormValid) return;
       const payload = {username, password};
-      const data = (await loginApi(payload)).data
-      console.log('loginData',data);
+      dispatch(loginActionCreator(payload))
+      // const data = (await loginApi(payload)).data
+      // console.log('loginData',data);
     } catch (error) {
       console.log(error);
     }

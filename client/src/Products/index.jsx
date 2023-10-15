@@ -57,7 +57,8 @@ function Products() {
             />
 
             <Row>
-                {products.filter(filterProducts).filter(searchFunction).map(item => <ProductCard key={item.id} {...item} />)}
+                {products.filter(filterProducts).filter(searchFunction)
+                .map(item => <ProductCard key={item.id} {...item} />)}
             </Row>
         </Container>)
 }

@@ -12,6 +12,7 @@ import MyNavbar from './MyNavbar';
 import Login from './Login';
 import Signup from './Signup';
 import Products from './Products';
+import Counter from './Counter';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path='bootstrap' element={<BootstrapDemo />} />
           <Route path='login' element={<Login />}/>
           <Route path='signup' element={<Signup />}/>
+          <Route path='counter' element={<Counter />}/>
         </Routes>
       </BrowserRouter>
     </>

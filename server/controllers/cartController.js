@@ -17,7 +17,7 @@ const addToCart = async (req, res, next) => {
         const product = req.body
         const { username } = res.locals.user;
         const data = await UserModel.addToCart(username, product);
-        res.send(responseCreator(`${product.title} addeed to cart`, 200, data));
+        res.send(responseCreator(`${product.title} addeed to cart`, data));
 
     } catch (error) {
         next(error)
@@ -30,7 +30,7 @@ const removeFromCart = async (req, res, next) => {
         console.log(product);
         const { username } = res.locals.user;
         const data = await UserModel.removeFromCart(username, product);
-        res.send(responseCreator(`${product.title} removed from cart`, 200, data));
+        res.send(responseCreator(`${product.title} removed from cart`, data));
 
     } catch (error) {
         next(error)
@@ -42,7 +42,7 @@ const incrementQty = async (req, res, next) => {
         const product = req.body
         const { username } = res.locals.user;
         const data = await UserModel.increment(username, product);
-        res.send(responseCreator(`${product.title} added to cart`, 200, data));
+        res.send(responseCreator(`${product.title} added to cart`, data));
 
     } catch (error) {
         next(error)
@@ -54,7 +54,7 @@ const decrementQty = async (req, res, next) => {
         const product = req.body
         const { username } = res.locals.user;
         const data = await UserModel.increment(username, product, false);
-        res.send(responseCreator(`${product.title} added to cart`, 200, data));
+        res.send(responseCreator(`${product.title} added to cart`, data));
 
     } catch (error) {
         next(error)
@@ -70,7 +70,7 @@ const clearCart = async (req, res, next) => {
     const {username} = res.locals.user;
     const data = await UserModel.clearCart(username);
     if (data) {
-        res.send(responseCreator("cart cleared", 200, data))
+        res.send(responseCreator("cart cleared", data))
     }
 }
 
