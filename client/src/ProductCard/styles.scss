@@ -11,7 +11,12 @@
     }
 
     .image {
-        // height: 150px;
-        aspect-ratio: (4/3);
+        height: 230px;
+        object-fit: contain;
+    }
+
+    .text{
+        font-size: 13px;
+        color: #666;
     }
 }

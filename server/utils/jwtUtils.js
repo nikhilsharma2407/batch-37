@@ -4,7 +4,8 @@ const { errorCreator } = require("./responseCreator");
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const generateToken = (data, time = '1h') => {
-    const token = sign(data, SECRET_KEY, { expiresIn: time });
+    const { cart, ...userData } = data;
+    const token = sign(userData, SECRET_KEY, { expiresIn: time });
     console.log(token);
     return token;
 }

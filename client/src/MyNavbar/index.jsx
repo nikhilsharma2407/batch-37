@@ -5,9 +5,17 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useSearchParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutActionCreator } from '../reducers/userReducer';
 function MyNavbar() {
+    const dispatch = useDispatch();
     const [, setSearchParams] = useSearchParams();
 
+    const { username } = useSelector(({ user }) => user)
+
+    const logout = () => {
+        dispatch(logoutActionCreator())
+    }
 
     return (
         <Navbar expand="md" variant='dark' bg='dark'>
@@ -32,8 +40,14 @@ function MyNavbar() {
                         </NavDropdown> */}
                     </Nav>
                     <Nav>
-                        <Nav.Link as={Link} to='/login'>Login</Nav.Link>
-                        <Nav.Link as={Link} to='/signup'>Signup</Nav.Link>
+                        {username ? <Nav.Link as={Link} onClick={logout} >Logout</Nav.Link> :
+                            <>
+                                <Nav.Link as={Link} to='/login'>Login</Nav.Link>
+                                <Nav.Link as={Link} to='/signup'>Signup</Nav.Link>
+                            </>
+                        }
+
+
                     </Nav>
                     <Form className="d-flex">
                         <Form.Control

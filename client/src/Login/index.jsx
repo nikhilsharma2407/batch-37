@@ -2,18 +2,31 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Card, Container, Row, Col } from 'react-bootstrap'
 import './styles.scss'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { loginApi } from '../apiUtil';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginActionCreator } from '../reducers/userReducer';
+import { useLocation, useNavigate } from 'react-router'
 
 function Login() {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const { username: isLoggedIn } = useSelector(({ user }) => user);
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(-1);
+    }
+
+  }, [isLoggedIn])
+
 
   const ENTER_KEY_CODE = 13;
 
@@ -26,7 +39,7 @@ function Login() {
   const onLogin = async () => {
     try {
       if (!isFormValid) return;
-      const payload = {username, password};
+      const payload = { username, password };
       dispatch(loginActionCreator(payload))
       // const data = (await loginApi(payload)).data
       // console.log('loginData',data);
@@ -35,9 +48,9 @@ function Login() {
     }
   }
 
-  const onKeyUp = (e)=>{
+  const onKeyUp = (e) => {
     // console.log(e);
-    if(e.keyCode === ENTER_KEY_CODE){
+    if (e.keyCode === ENTER_KEY_CODE) {
       console.log('Enter key pressed');
       onLogin()
       // trigger submit

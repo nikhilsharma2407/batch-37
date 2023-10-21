@@ -5,9 +5,12 @@ import './styles.scss'
 import { CartPlus } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCartActionCreator } from '../reducers/userReducer'
+import CounterCart from '../CounterCart'
+import { useLocation, useNavigate } from 'react-router'
 
 function ProductCard(product) {
     const {
+        id,
         title,
         price,
         description,
@@ -15,12 +18,19 @@ function ProductCard(product) {
         image,
         rating } = product
 
-    const { cart, totalValue } = useSelector(({ user }) => user);
+    const { cart, username } = useSelector(({ user }) => user);
+
+    const navigate = useNavigate();
+
+    const isAddedToCart = cart.find(cartItem => cartItem.id === id);
 
     const dispatch = useDispatch(product);
-    
+
     const addToCart = () => {
-        dispatch(addToCartActionCreator(product))
+        dispatch(addToCartActionCreator(product));
+        if (!username) {
+            navigate('/login')
+        }
     }
 
     return (
@@ -28,17 +38,17 @@ function ProductCard(product) {
             <Card className='product mb-3'>
                 <Card.Img variant="top" src={image} className='image img' fluid />
                 <Card.Body className='content'>
-                    <div>{title}</div>
+                    <div className='text'>{title}</div>
                     <div>{price}</div>
-                    <div>{category}</div>
-                    <div className='description'>{description}</div>
+                    {/* <div>{category}</div> */}
+                    <div className='description text'>{description}</div>
                     <div>
                         <span className='me-2'>{rating.rate}</span>
                         <span>{rating.count}</span>
                     </div>
                 </Card.Body>
                 <Card.Footer>
-                    <CartPlus size={20} onClick={addToCart} />
+                    {isAddedToCart ? <CounterCart quantity={isAddedToCart.quantity} product={isAddedToCart} /> : <CartPlus size={20} onClick={addToCart} />}
                 </Card.Footer>
             </Card>
         </Col>

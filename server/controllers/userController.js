@@ -32,7 +32,7 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        const { password: passwordHash, secret , ...userData } = await UserModel.findUser(username);
+        const { password: passwordHash, secret, ...userData } = await UserModel.findUser(username);
         console.log(password);
         console.log(userData);
 
@@ -42,7 +42,7 @@ const login = async (req, res, next) => {
             const token = generateToken(userData);
             res.status(200);
             res.cookie('token', token, { maxAge: 3600_000, httpOnly: true })
-            res.send(responseCreator(`${username} logged in successfully!!!`,userData))
+            res.send(responseCreator(`${username} logged in successfully!!!`, userData))
         } else {
             errorCreator('Invalid Password', 401);
         }
@@ -54,10 +54,8 @@ const login = async (req, res, next) => {
 
 const loginWithCookie = async (req, res, next) => {
     try {
-        const { token = null } = req.cookies;
-        const { username } = verifyToken(token);
-        const { password, ...user } = await UserModel.findUser(username);
-        res.send(responseCreator("Logged in with Cookie", 200, user));
+        const { password, secret, ...user } = res.locals.user
+        res.send(responseCreator("Logged in with Cookie", user));
     } catch (error) {
         next(error)
     }
@@ -72,7 +70,7 @@ const resetPassword = async (req, res, next) => {
     try {
         const { password, username, otp } = req.body;
         const { secret } = await UserModel.findUser(username);
-        console.log({secret});
+        console.log({ secret });
         const isOTPvalid = verifyOTP(secret, otp);
         if (isOTPvalid) {
             // upadte the new password
@@ -82,12 +80,17 @@ const resetPassword = async (req, res, next) => {
                 res.status(200);
                 res.send(responseCreator(`Password reset successfully!!!`))
             }
-        } else{
-            errorCreator('Invalid OTP',401);
+        } else {
+            errorCreator('Invalid OTP', 401);
         }
     } catch (error) {
         next(error)
     }
 }
 
-module.exports = { signup, login, loginWithToken: loginWithCookie, order, resetPassword }
+const logout = (req, res, next) => {
+    res.clearCookie('token');
+    res.send(responseCreator("Logout successful!!!"))
+}
+
+module.exports = { signup, login, loginWithToken: loginWithCookie, order, resetPassword, logout }
