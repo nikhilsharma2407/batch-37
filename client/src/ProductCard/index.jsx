@@ -2,11 +2,14 @@ import React from 'react'
 import { Card, Col } from 'react-bootstrap'
 import './styles.scss'
 
-import { CartPlus } from 'react-bootstrap-icons'
+import { CartPlus, TrashFill } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCartActionCreator } from '../reducers/userReducer'
+import { addToCartActionCreator, removeFromCartActionCreator } from '../reducers/userReducer'
 import CounterCart from '../CounterCart'
 import { useLocation, useNavigate } from 'react-router'
+import { Badge } from "react-bootstrap"
+import Rating from '../Rating'
+
 
 function ProductCard(product) {
     const {
@@ -14,7 +17,6 @@ function ProductCard(product) {
         title,
         price,
         description,
-        category,
         image,
         rating } = product
 
@@ -22,7 +24,7 @@ function ProductCard(product) {
 
     const navigate = useNavigate();
 
-    const isAddedToCart = cart.find(cartItem => cartItem.id === id);
+    const productInfo = cart.find(cartItem => cartItem.id === id);
 
     const dispatch = useDispatch(product);
 
@@ -31,6 +33,10 @@ function ProductCard(product) {
         if (!username) {
             navigate('/login')
         }
+    };
+
+    const removeFromCart = () => {
+        dispatch(removeFromCartActionCreator({ ...product, quantity: productInfo.quantity }));
     }
 
     return (
@@ -42,13 +48,19 @@ function ProductCard(product) {
                     <div>{price}</div>
                     {/* <div>{category}</div> */}
                     <div className='description text'>{description}</div>
-                    <div>
-                        <span className='me-2'>{rating.rate}</span>
-                        <span>{rating.count}</span>
+                    <div className='d-flex align-items-center'>
+                        <Rating rating={rating.rate} />
+                        <Badge pill bg="info" className='ms-2'>
+                            {rating.count}
+                        </Badge>
                     </div>
                 </Card.Body>
                 <Card.Footer>
-                    {isAddedToCart ? <CounterCart quantity={isAddedToCart.quantity} product={isAddedToCart} /> : <CartPlus size={20} onClick={addToCart} />}
+                    {productInfo ? <div className='d-flex align-items-center'>
+                        <CounterCart quantity={productInfo.quantity} product={productInfo} />
+                        <TrashFill onClick={removeFromCart} className='ms-2 text-danger' size={20} />
+                    </div>
+                        : <CartPlus size={20} onClick={addToCart} />}
                 </Card.Footer>
             </Card>
         </Col>

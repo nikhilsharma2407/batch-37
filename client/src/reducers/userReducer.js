@@ -1,5 +1,7 @@
-import { addToCartApi, decrementQtyApi, incrementQtyApi, loginApi, 
-    loginWithCookieApi, signupApi, logoutAPi } from "../apiUtil";
+import {
+    addToCartApi, decrementQtyApi, incrementQtyApi, loginApi,
+    loginWithCookieApi, signupApi, logoutAPi, removeFromCartApi
+} from "../apiUtil";
 
 const initialState = {
     name: '',
@@ -98,6 +100,10 @@ export const decrementQtyActionCreator = (apiPayload) => {
     return asyncActionCreator(ACTIONS.CART.DECREMENT, decrementQtyApi, apiPayload);
 }
 
+export const removeFromCartActionCreator = (apiPayload) => {
+    return asyncActionCreator(ACTIONS.CART.REMOVE, removeFromCartApi, apiPayload);
+}
+
 export const logoutActionCreator = () => {
     return asyncActionCreator(ACTIONS.USER.LOGOUT, logoutAPi);
 }
@@ -111,6 +117,7 @@ export const userReducer = (state = initialState, action) => {
         case ACTIONS.CART.ADD:
         case ACTIONS.CART.INCREMENT:
         case ACTIONS.CART.DECREMENT:
+        case ACTIONS.CART.REMOVE:
             return { ...state, ...data, message, success };
 
         case ACTIONS.USER.SIGNUP:

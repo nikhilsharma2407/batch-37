@@ -5,7 +5,7 @@ const getCartItems = async (req, res, next) => {
     try {
         const { username } = res.locals.user;
         const data = await UserModel.getCartItems(username);
-        res.send(responseCreator('cart items', 200, data));
+        res.send(responseCreator('cart items', data));
 
     } catch (error) {
         next(error)
@@ -54,7 +54,7 @@ const decrementQty = async (req, res, next) => {
         const product = req.body
         const { username } = res.locals.user;
         const data = await UserModel.increment(username, product, false);
-        res.send(responseCreator(`${product.title} added to cart`, data));
+        res.send(responseCreator(`${product.title} quantity updated`, data));
 
     } catch (error) {
         next(error)

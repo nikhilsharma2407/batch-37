@@ -6,10 +6,12 @@ import { useSearchParams } from 'react-router-dom'
 import axios from 'axios';
 import ProductCard from '../ProductCard';
 import ProductFilter from '../ProductFilter';
+import Sort from '../Sort';
 
 function Products() {
     const url = 'https://fakestoreapi.com/products';
     const [products, setProducts] = useState([]);
+    const [filters, setFilters] = useState([]);
     const [searchParams] = useSearchParams();
     const [activeFilters, setActiveFilters] = useState([])
 
@@ -22,6 +24,7 @@ function Products() {
             const data = (await axios.get(url)).data;
             console.log(data);
             setProducts(data);
+            setFilters([...new Set(data.map(({ category }) => category))])
         })()
     }, [])
 
@@ -38,10 +41,6 @@ function Products() {
         return found
     }
 
-
-    const filters = [...new Set(products.map(({ category }) => category))]
-    console.log({ activeFilters });
-
     const filterProducts = ({ category }) => {
         if (activeFilters.length === 0) {
             return true;
@@ -56,9 +55,11 @@ function Products() {
                 setActiveFilters={setActiveFilters}
             />
 
+            <Sort sortedList={products} setSortedList={setProducts} />
+
             <Row>
                 {products.filter(filterProducts).filter(searchFunction)
-                .map(item => <ProductCard key={item.id} {...item} />)}
+                    .map(item => <ProductCard key={item.id} {...item} />)}
             </Row>
         </Container>)
 }
