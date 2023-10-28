@@ -17,6 +17,7 @@ import Loader from './Loader';
 import Toast from './Toast';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { loginWithCookieActionCreator } from './reducers/userReducer';
+import CartComponent from './CartComponent';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
           <Route path='counter' element={<Counter />} />
+          <Route path='cart' element={<CartComponent />} />
         </Routes>
       </BrowserRouter>
     </>

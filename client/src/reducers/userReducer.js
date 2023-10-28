@@ -1,6 +1,6 @@
 import {
     addToCartApi, decrementQtyApi, incrementQtyApi, loginApi,
-    loginWithCookieApi, signupApi, logoutAPi, removeFromCartApi
+    loginWithCookieApi, signupApi, logoutAPi, removeFromCartApi, clearCartApi, checkoutApi, resetPasswordApi
 } from "../apiUtil";
 
 const initialState = {
@@ -10,6 +10,7 @@ const initialState = {
     message: '',
     cart: [],
     totalValue: 0,
+    totalCount: 0,
     orders: [],
     data: null,
     loading: false
@@ -30,6 +31,7 @@ const ACTIONS = {
         REMOVE: 'REMOVE',
         INCREMENT: 'INCREMENT',
         DECREMENT: 'DECREMENT',
+        CHECKOUT: 'CHECKOUT',
     },
     LOADING: 'LOADING',
     MESSAGE: 'MESSAGE',
@@ -60,7 +62,6 @@ const asyncActionCreator = (type, apiFn = () => { }, apiPayload) => {
             // stop loading
             dispatch(loadingActionCreator());
         }
-
     }
 }
 
@@ -84,7 +85,7 @@ export const loginWithCookieActionCreator = () => {
     return asyncActionCreator(ACTIONS.USER.LOGIN, loginWithCookieApi)
 };
 
-export const singupActionCreator = (apiPayload) => {
+export const signupActionCreator = (apiPayload) => {
     return asyncActionCreator(ACTIONS.USER.SIGNUP, signupApi, apiPayload);
 }
 
@@ -108,6 +109,18 @@ export const logoutActionCreator = () => {
     return asyncActionCreator(ACTIONS.USER.LOGOUT, logoutAPi);
 }
 
+export const clearCartActionCreator = () => {
+    return asyncActionCreator(ACTIONS.CART.CLEAR, clearCartApi);
+}
+
+export const checkoutActionCreator = () => {
+    return asyncActionCreator(ACTIONS.CART.CHECKOUT, checkoutApi);
+}
+
+export const resetPasswordActionCreator = (apiPayload) => {
+    return asyncActionCreator(ACTIONS.USER.RESET_PASSWORD, resetPasswordApi, apiPayload);
+}
+
 
 export const userReducer = (state = initialState, action) => {
     const { type, payload = {} } = action;
@@ -118,12 +131,16 @@ export const userReducer = (state = initialState, action) => {
         case ACTIONS.CART.INCREMENT:
         case ACTIONS.CART.DECREMENT:
         case ACTIONS.CART.REMOVE:
+        case ACTIONS.CART.CLEAR:
+        case ACTIONS.CART.CHECKOUT:
+            // { cart:data.cart, name:data.name, totalValue:data.totalValue + all the state props }
             return { ...state, ...data, message, success };
 
         case ACTIONS.USER.SIGNUP:
             return { ...state, data, message, success };
 
         case ACTIONS.MESSAGE:
+        case ACTIONS.USER.RESET_PASSWORD:
             return { ...state, message, success }
         case ACTIONS.LOADING:
             return { ...state, loading: payload };

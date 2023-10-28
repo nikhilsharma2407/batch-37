@@ -63,11 +63,17 @@ const decrementQty = async (req, res, next) => {
 
 
 const checkout = async (req, res, next) => {
-
+    try {
+        const { username } = res.locals.user;
+        const data = await UserModel.checkout(username);
+        res.send(responseCreator('Order placed successfully!!!',data));
+    } catch (error) {
+        next(error);
+    }
 }
 
 const clearCart = async (req, res, next) => {
-    const {username} = res.locals.user;
+    const { username } = res.locals.user;
     const data = await UserModel.clearCart(username);
     if (data) {
         res.send(responseCreator("cart cleared", data))

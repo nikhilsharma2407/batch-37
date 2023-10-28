@@ -1,136 +1,138 @@
-// MongoDB Playground
-// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
-// Make sure you are connected to enable completions and to be able to run a playground.
-// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+// // MongoDB Playground
+// // To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// // Make sure you are connected to enable completions and to be able to run a playground.
+// // Use Ctrl+Space inside a snippet or a string literal to trigger completions.
 
-// Select the database to use.
-// use('mongodbVSCodePlaygroundDB');
-// db.sales.drop();
-
-
-
-// // // db.<collectionName>.insertMany
-
-// db.sales.insertMany([
-//   { '_id': 1, 'item': 'abc', 'price': 10, 'quantity': 2, 'date': new Date('2014-03-01T08:00:00Z') },
-//   { '_id': 2, 'item': 'jkl', 'price': 20, 'quantity': 1, 'date': new Date('2014-03-01T09:00:00Z') },
-//   { '_id': 3, 'item': 'xyz', 'price': 5, 'quantity': 10, 'date': new Date('2014-03-15T09:00:00Z') },
-//   { '_id': 4, 'item': 'xyz', 'price': 5, 'quantity':  20, 'date': new Date('2014-04-04T11:21:39.736Z') },
-//   { '_id': 5, 'item': 'abc', 'price': 10, 'quantity': 10, 'date': new Date('2014-04-04T21:23:13.331Z') },
-//   { '_id': 6, 'item': 'def', 'price': 7.5, 'quantity': 5, 'date': new Date('2015-06-04T05:08:13Z') },
-//   { '_id': 7, 'item': 'def', 'price': 7.5, 'quantity': 10, 'date': new Date('2015-09-10T08:43:00Z') },
-//   { '_id': 8, 'item': 'abc', 'price': 10, 'quantity': 5, 'date': new Date('2016-02-06T20:20:13Z') },
-// ]);
+// // Select the database to use.
+// // use('mongodbVSCodePlaygroundDB');
+// // db.sales.drop();
 
 
-// Find all entries
-// SELECT * from <table_name>
 
-// db.sales.find({})
+// // // // db.<collectionName>.insertMany
 
-// filter {} , projection 
-
-// db.sales.find({},{});
-// db.sales.find({},{_id:0, date:0});
-
-// db.sales.find({item:"abc"})
-
-// Comparision Operators -
-// $eq - t0 check equality
-// $lt - less than <
-// $gt - greater than >
-// $lte - less than or equal<=
-// $gte - greater than or equal >=
-
-// db.sales.find({quantity:{$lte:5}})
-
-// $or:[{condition1},{condition2},...,{conditionN}]
-// Find products with item name as abc or def
-
-// db.sales.find({
-//     $or:[
-//             {item:"abc"},
-//             {item:"xyz"}
-//         ]
-//     });
+// // db.sales.insertMany([
+// //   { '_id': 1, 'item': 'abc', 'price': 10, 'quantity': 2, 'date': new Date('2014-03-01T08:00:00Z') },
+// //   { '_id': 2, 'item': 'jkl', 'price': 20, 'quantity': 1, 'date': new Date('2014-03-01T09:00:00Z') },
+// //   { '_id': 3, 'item': 'xyz', 'price': 5, 'quantity': 10, 'date': new Date('2014-03-15T09:00:00Z') },
+// //   { '_id': 4, 'item': 'xyz', 'price': 5, 'quantity':  20, 'date': new Date('2014-04-04T11:21:39.736Z') },
+// //   { '_id': 5, 'item': 'abc', 'price': 10, 'quantity': 10, 'date': new Date('2014-04-04T21:23:13.331Z') },
+// //   { '_id': 6, 'item': 'def', 'price': 7.5, 'quantity': 5, 'date': new Date('2015-06-04T05:08:13Z') },
+// //   { '_id': 7, 'item': 'def', 'price': 7.5, 'quantity': 10, 'date': new Date('2015-09-10T08:43:00Z') },
+// //   { '_id': 8, 'item': 'abc', 'price': 10, 'quantity': 5, 'date': new Date('2016-02-06T20:20:13Z') },
+// // ]);
 
 
-// $and
-// db.sales.find({
-//     $and:[
-//         {price:{$gte:10}},
-//         {quantity:{$gte:10}}
-//     ]
-// })
-// db.sales.find({ price:{$gte:10},quantity:{$gte:10}  });
+// // Find all entries
+// // SELECT * from <table_name>
 
-// db.sales.find({_id:100}) // always returns array
-// db.sales.findOne({item:"abc"}) // the result object
-// CRUD
+// // db.sales.find({})
 
-// Update query - (filter, updateQuery);
+// // filter {} , projection 
 
-// $inc
-// order 10 more items, with qty<=5, 
-// db.sales.find();
-// db.sales.updateMany({quantity:{$lte:5}},{ 
-// //     $inc:{quantity:10} 
-// // });
+// // db.sales.find({},{});
+// // db.sales.find({},{_id:0, date:0});
 
-// // $mul
+// // db.sales.find({item:"abc"})
+
+// // Comparision Operators -
+// // $eq - t0 check equality
+// // $lt - less than <
+// // $gt - greater than >
+// // $lte - less than or equal<=
+// // $gte - greater than or equal >=
+
+// // db.sales.find({quantity:{$lte:5}})
+
+// // $or:[{condition1},{condition2},...,{conditionN}]
+// // Find products with item name as abc or def
+
+// // db.sales.find({
+// //     $or:[
+// //             {item:"abc"},
+// //             {item:"xyz"}
+// //         ]
+// //     });
+
+
+// // $and
+// // db.sales.find({
+// //     $and:[
+// //         {price:{$gte:10}},
+// //         {quantity:{$gte:10}}
+// //     ]
+// // })
+// // db.sales.find({ price:{$gte:10},quantity:{$gte:10}  });
+
+// // db.sales.find({_id:100}) // always returns array
+// // db.sales.findOne({item:"abc"}) // the result object
+// // CRUD
+
+// // Update query - (filter, updateQuery);
+
+// // $inc
+// // order 10 more items, with qty<=5, 
+// // db.sales.find();
 // // db.sales.updateMany({quantity:{$lte:5}},{ 
-// //     $mul:{quantity:10} 
-// // });
+// // //     $inc:{quantity:10} 
+// // // });
+
+// // // $mul
+// // // db.sales.updateMany({quantity:{$lte:5}},{ 
+// // //     $mul:{quantity:10} 
+// // // });
 
 
 
-// // for the upcoming sale, give a discount of 10% for all prod, priced > 5;
+// // // for the upcoming sale, give a discount of 10% for all prod, priced > 5;
 
-// // db.sales.updateMany({price:{$gt:5}},{
-// // $mul:{price:0.9}
-// // });
+// // // db.sales.updateMany({price:{$gt:5}},{
+// // // $mul:{price:0.9}
+// // // });
 
-// // db.sales.insertOne({_id:10,item:"xyz", discounts:['axis','hdfc']});
-// // offer discounts of icici, sbi cc,
+// // // db.sales.insertOne({_id:10,item:"xyz", discounts:['axis','hdfc']});
+// // // offer discounts of icici, sbi cc,
 
-// // Array operators - 
-// // $pop (1/-1) no value/1 remove last element, remove the first element
-// // $push, insert element at last
-// // $pull, remove matching element from array
-// // $pullAll, takes array as arguments,  removes all matching elements from array, provided as arg
-// // $addToSet, used to add something only if doesn't exist in array, used to prevent duplicate insertions in array;
+// // // Array operators - 
+// // // $pop (1/-1) no value/1 remove last element, remove the first element
+// // // $push, insert element at last
+// // // $pull, remove matching element from array
+// // // $pullAll, takes array as arguments,  removes all matching elements from array, provided as arg
+// // // $addToSet, used to add something only if doesn't exist in array, used to prevent duplicate insertions in array;
 
-//     // db.sales.deleteOne({_id:10})
-// for (let card of ['axis','hdfc']){
-//     db.sales.updateOne({_id:10},{
-//         $addToSet:{discounts:card}
-//     })
-// }
-//     db.sales.updateOne({_id:10},{
-//         $pullAll:{discounts:['sbi','icici']}
-//     })
-// db.sales.find({_id:10});
+// //     // db.sales.deleteOne({_id:10})
+// // for (let card of ['axis','hdfc']){
+// //     db.sales.updateOne({_id:10},{
+// //         $addToSet:{discounts:card}
+// //     })
+// // }
+// //     db.sales.updateOne({_id:10},{
+// //         $pullAll:{discounts:['sbi','icici']}
+// //     })
+// // db.sales.find({_id:10});
 
-use("test");
-const product = {
-    "id": 3,
-    "title": "Mens Cotton Jacket",
-    "price": 55.99,
-    "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
-    "category": "men's clothing",
-    "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
-    "rating": {
-        "rate": 4.7,
-        "count": 500
-    }
-};
-// db.users.findOne({ username:'nikhil', "cart.id": product.id });
-// db.users.findOne({ username:'nikhil' });
-db.users.findOneAndUpdate({ username:'nikhil',"cart.id": product.id },{
-$inc: {
-            totalValue: (1 * product.price),
-            "cart.$.quantity": 1
-        }
-    }, 
-    { new: true }
-);
+// use("test");
+// const product = {
+//     "id": 3,
+//     "title": "Mens Cotton Jacket",
+//     "price": 55.99,
+//     "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
+//     "category": "men's clothing",
+//     "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+//     "rating": {
+//         "rate": 4.7,
+//         "count": 500
+//     }
+// };
+// // db.users.findOne({ username:'nikhil', "cart.id": product.id });
+// // db.users.findOne({ username:'nikhil' });
+// db.users.findOneAndUpdate({ username:'nikhil',"cart.id": product.id },{
+// $inc: {
+//             totalValue: (1 * product.price),
+//             "cart.$.quantity": 1
+//         }
+//     }, 
+//     { new: true }
+// );
+use('test');
+db.users.drop();

@@ -21,6 +21,8 @@ const state = {
     isLogged:false,
 }
 
+// NEVER DO THIS in redux
+// state.isLogged = true
 
 // const copyState = {...state}
 // copyState.isLogged = true

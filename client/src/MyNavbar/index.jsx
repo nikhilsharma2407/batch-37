@@ -2,16 +2,18 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useSearchParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutActionCreator } from '../reducers/userReducer';
+import { Cart } from 'react-bootstrap-icons';
+import './styles.scss'
 function MyNavbar() {
     const dispatch = useDispatch();
     const [, setSearchParams] = useSearchParams();
 
-    const { username } = useSelector(({ user }) => user)
+    const { username, totalCount } = useSelector(({ user }) => user)
 
     const logout = () => {
         dispatch(logoutActionCreator())
@@ -40,7 +42,16 @@ function MyNavbar() {
                         </NavDropdown> */}
                     </Nav>
                     <Nav>
-                        {username ? <Nav.Link as={Link} onClick={logout} >Logout</Nav.Link> :
+                        {username ? <>
+                            <Nav.Link as={Link} to='/cart'><>
+                                <Cart size={25} />
+                                {totalCount ? <Badge pill bg="primary" className='count'>
+                                    {totalCount}
+                                </Badge> : null}
+                            </>
+                            </Nav.Link>
+                            <Nav.Link as={Link} onClick={logout} >Logout</Nav.Link>
+                        </> :
                             <>
                                 <Nav.Link as={Link} to='/login'>Login</Nav.Link>
                                 <Nav.Link as={Link} to='/signup'>Signup</Nav.Link>

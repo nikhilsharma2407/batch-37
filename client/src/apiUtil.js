@@ -13,6 +13,7 @@ const ENDPOINTS = {
     DECREMENT: 'cart/decrement',
     CLEAR_CART: 'cart/clearCart',
     REMOVE_FROM_CART: 'cart/removeFromCart',
+    CHECKOUT: 'cart/checkout',
 }
 
 export const loginApi = (payload) => {
@@ -53,4 +54,8 @@ export const removeFromCartApi = (payload)=>{
 
 export const logoutAPi = ()=>{
     return instance.get(ENDPOINTS.LOGOUT);
+}
+
+export const checkoutApi = ()=>{
+    return instance.post(ENDPOINTS.CHECKOUT);
 }

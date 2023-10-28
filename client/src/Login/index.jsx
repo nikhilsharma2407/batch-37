@@ -5,7 +5,7 @@ import './styles.scss'
 import { useEffect, useState } from 'react';
 import { loginApi } from '../apiUtil';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginActionCreator } from '../reducers/userReducer';
+import { loginActionCreator, resetPasswordActionCreator } from '../reducers/userReducer';
 import { useLocation, useNavigate } from 'react-router'
 
 function Login() {
@@ -16,8 +16,12 @@ function Login() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [otp, setOTP] = useState(null);
+  const [showRestForm, setShowRestForm] = useState(false);
 
   const { username: isLoggedIn } = useSelector(({ user }) => user);
+
+  const { message, success } = useSelector(({ user }) => user);
 
 
   useEffect(() => {
@@ -25,7 +29,16 @@ function Login() {
       navigate(-1);
     }
 
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
+
+
+  useEffect(() => {
+    if (showRestForm && success) {
+      setShowRestForm(false);
+    }
+
+  }, [success, showRestForm]);
+
 
 
   const ENTER_KEY_CODE = 13;
@@ -43,6 +56,16 @@ function Login() {
       dispatch(loginActionCreator(payload))
       // const data = (await loginApi(payload)).data
       // console.log('loginData',data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const passwordReset = async () => {
+    try {
+      if (!otp || !isFormValid) return;
+      const payload = { username, password, otp };
+      dispatch(resetPasswordActionCreator(payload))
     } catch (error) {
       console.log(error);
     }
@@ -75,14 +98,42 @@ function Login() {
                     onKeyUp={onKeyUp}
                     onChange={e => updateState(e, setPassword)} />
                 </Form.Group>
+                {
+                  showRestForm ?
+                    <>
+                      <Form.Group className="mb-3" controlId="otp">
+                        <Form.Label>OTP</Form.Label>
+                        <Form.Control type="number" placeholder="Code from Authenticator"
+                          onKeyUp={onKeyUp}
+                          onChange={e => updateState(e, setOTP)} />
+                      </Form.Group>
+                      <Button
+                        variant="outline-primary"
+                        onClick={passwordReset}
+                        disabled={!isFormValid && !otp} >
+                        Reset Password
+                      </Button>
+                    </>
+                    :
+                    <div className='d-flex justify-content-between'>
+                      <Button
+                        variant="outline-primary"
+                        onClick={onLogin}
+                        disabled={!isFormValid} >
+                        Login
+                      </Button>
+
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => setShowRestForm(true)}>
+                        Forgot Password
+                      </Button>
+                    </div>
+                }
 
 
-                <Button
-                  variant="outline-primary"
-                  onClick={onLogin}
-                  disabled={!isFormValid} >
-                  Login
-                </Button>
+
+
               </Form>
             </Card.Body>
           </Card>

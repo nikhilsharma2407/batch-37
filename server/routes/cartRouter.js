@@ -10,5 +10,6 @@ router.patch('/increment',authController, incrementQty);
 router.patch('/decrement',authController, decrementQty);
 router.post('/clearCart',authController, clearCart);
 router.post('/checkout',authController, checkout);
+// router.post('/getOrder',authController, getOrder);
 
 module.exports = router
