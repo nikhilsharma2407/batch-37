@@ -1,4 +1,4 @@
-const productsData = [
+const productsData =
     [
         {
             "id": 1,
@@ -241,7 +241,6 @@ const productsData = [
             }
         }
     ]
-]
 
 const userData = [{
     "username": "nikhil101",
@@ -250,11 +249,11 @@ const userData = [{
     "cart": [1, 2, 3],
     "totalValue": 0,
     "totalCount": 0,
-    "orders": []
 },
 {
     "username": "test",
-    "name": "test",
+    "firstName":"test",
+    "lastName":"test",
     "cart": [],
     "totalValue": 0,
     "totalCount": 0,

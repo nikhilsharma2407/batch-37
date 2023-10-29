@@ -8,7 +8,7 @@ import ProductCard from '../ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkoutActionCreator, clearCartActionCreator } from '../reducers/userReducer';
 
-const instance = axios.create({ baseURL: 'http://localhost:4000/cart', withCredentials: true });
+const instance = axios.create({ baseURL: '/cart', withCredentials: true });
 
 interface IRating {
     rate: number,

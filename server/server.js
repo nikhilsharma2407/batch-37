@@ -13,7 +13,7 @@ const userRouter = require('./routes/userRouter');
 const cartRouter = require('./routes/cartRouter');
 const requestLogger = require('./utils/requestLogger');
 const errHandler = require('./utils/errorHandler');
-const PORT = 3000;
+const PORT = process.env.PORT || 4000;
 // http://localhost:4000/router
 
 app.use(cors({
